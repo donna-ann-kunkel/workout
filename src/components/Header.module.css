@@ -13,3 +13,20 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     z-index: 10;
 }
+.button {
+    font: inherit;
+    cursor: pointer;
+    background-color: #23068a;
+    border: 1px solid #23068a;
+    color: white;
+    padding: 0.25rem 1rem;
+    margin-left: 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.button:hover,
+.button:active {
+    background-color: #23068a;
+    border-color: #23068a;
+}

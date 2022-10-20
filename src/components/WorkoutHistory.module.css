@@ -1,0 +1,27 @@
+.date{
+    
+    background-color: white;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 1.2rem;
+
+}
+.position{
+    margin-top: 8rem;
+    
+}
+.header {
+    position: fixed;
+    bottom: 0rem;
+    left: 0;
+    width: 100%;
+    height: 5rem;
+    background-color: #21d2ed;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    z-index: 10;
+}

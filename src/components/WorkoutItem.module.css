@@ -11,7 +11,7 @@
 }
 
 .input input {
-    width: 3rem;
+    width: 4rem;
     border-radius: 5px;
     border: 2px solid #ccc;
     font: inherit;
@@ -25,3 +25,22 @@
     margin: 1rem;
     border-radius: 1.2rem;
 }
+
+
+
+.button {
+    font: inherit;
+    cursor: pointer;
+    background-color: #23068a;
+    border: 1px solid #23068a;
+    color: white;
+    padding: 0.25rem 1rem;
+    margin-left: 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.button:hover,
+.button:active {
+    background-color: #23068a;
+    border-color: #23068a;}
