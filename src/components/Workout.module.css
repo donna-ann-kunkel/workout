@@ -32,3 +32,25 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     z-index: 10;
 }
+.icon{
+    font-weight:700;
+}
+
+.input {
+    width: 8rem;
+    border-radius: 5px;
+    border: 2px solid #ccc;
+    font: inherit;
+    padding-left: 1rem;
+}
+
+.menu {
+    background-color: rgba(255, 255, 255, 0.9);
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    gap: 4.8rem;
+    position: absolute;
+    bottom: 0;
+    width:9rem;
+}

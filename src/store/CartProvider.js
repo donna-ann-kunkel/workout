@@ -7,10 +7,26 @@ const defaultCartState = {
 const cartReducer = (state, action) => {
   if (action.type === "ADD") {
     const updatedExercise = [...state.exercises, action.item];
-    console.log(updatedExercise);
 
     return {
       exercises: updatedExercise,
+    };
+  }
+  if (action.type === "CLEAR") {
+    return defaultCartState;
+  }
+  if (action.type === "REMOVE") {
+    console.log(state.exercises, action);
+
+    // const existingCartItemIndex = state.exercises.findIndex(
+    //   (item) => item.id === action.id
+    // );
+
+    const updatedExercises = state.exercises.filter(
+      (item) => item.id !== action.id
+    );
+    return {
+      exercises: updatedExercises,
     };
   }
 
@@ -26,9 +42,17 @@ const CartProvider = (props) => {
     dispatchCartAction({ type: "ADD", item: item });
   };
 
+  const removeItemFromCartHandler = (id) => {
+    dispatchCartAction({ type: "REMOVE", id: id });
+  };
+  const clearCartHandler = (item) => {
+    dispatchCartAction({ type: "CLEAR", item: item });
+  };
   const cartContext = {
     exercise: cartState.exercises,
     addItems: addItemToCartHandler,
+    removeItems: removeItemFromCartHandler,
+    clearCart: clearCartHandler,
   };
 
   return (

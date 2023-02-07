@@ -15,6 +15,7 @@ const WorkoutItem = (props) => {
     document.getElementById("weight").value = "";
 
     cartCtx.addItems({
+      id: Math.random(),
       exerciseName: props.name,
       weight: enteredWeight,
       reps: enteredReps,

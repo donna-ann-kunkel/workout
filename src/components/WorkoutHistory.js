@@ -1,72 +1,63 @@
-import { Fragment, useState, useRef } from "react";
+import { Fragment, useState, useRef, useEffect } from "react";
 import HistoryItem from "./HistoryItem";
 import styles from "./WorkoutHistory.module.css";
 
 const WorkoutHistory = (props) => {
   const [isExerciseFiltered, setExerciseFiltered] = useState(false);
-  const refSelectExercise = useRef("bicep curl");
+  const [workoutHistory, setWorkoutHistory] = useState([
+    {
+      workoutId: "",
+      workoutDate: "",
+      exercises: [
+        {
+          name: "",
+          weight: 0,
+          unit: "",
+          reps: 0,
+        },
+      ],
+    },
+  ]);
+  const refSelectExercise = useRef("");
 
-  const dummyData = {
-    id: "012345",
-    exerciseData: [
-      {
-        workoutId: 1,
+  useEffect(() => {
+    const fetchExercises = async () => {
+      const response = await fetch(
+        "https://udemy-react-http-d7691-default-rtdb.firebaseio.com/userExercise.json"
+      );
 
-        workoutDate: "1 / 1 / 2020",
-        exercises: [
-          {
-            name: "bicep curl",
-            weight: 10,
-            unit: "lb",
-            reps: 10,
-          },
-          { name: "bicep curl", weight: 15, unit: "lb", reps: 15 },
-          { name: "front lunge", weight: 25, unit: "lb", reps: 15 },
-          { name: "reverse lunge", weight: 25, unit: "lb", reps: 15 },
-          { name: "squat", weight: 25, unit: "lb", reps: 15 },
-        ],
-      },
+      const userExerciseData = await response.json();
 
-      {
-        workoutId: 2,
-        workoutDate: "1 / 2 / 2020",
-        exercises: [
-          {
-            name: "bicep curl",
-            weight: 10,
-            unit: "lb",
-            reps: 10,
-          },
-          { name: "bicep curl", weight: 15, unit: "lb", reps: 15 },
-          { name: "front lunge", weight: 25, unit: "lb", reps: 15 },
-          { name: "reverse lunge", weight: 25, unit: "lb", reps: 15 },
-          { name: "squat", weight: 25, unit: "lb", reps: 15 },
-        ],
-      },
-      {
-        workoutId: 3,
-        workoutDate: "1 / 4 / 2020",
-        exercises: [
-          {
-            name: "bicep curl",
-            weight: 10,
-            unit: "lb",
-            reps: 10,
-          },
-          { name: "bicep curl", weight: 15, unit: "lb", reps: 15 },
-          { name: "front lunge", weight: 25, unit: "lb", reps: 15 },
-          { name: "deadlift", weight: 65, unit: "lb", reps: 15 },
-          { name: "deadlift", weight: 65, unit: "lb", reps: 10 },
-          { name: "deadlift", weight: 65, unit: "lb", reps: 10 },
-          { name: "squat", weight: 55, unit: "lb", reps: 15 },
-          { name: "squat", weight: 65, unit: "lb", reps: 15 },
-          { name: "squat", weight: 75, unit: "lb", reps: 15 },
-        ],
-      },
-    ],
-  };
+      const exerciseArray = [];
+      for (const key in userExerciseData) {
+        exerciseArray.push({
+          workoutId: key,
+          workoutDate: userExerciseData[key].exerciseData[0].date,
+          exercises: userExerciseData[key].exerciseData[0].exercise,
+        });
+      }
+      setWorkoutHistory(exerciseArray);
+    };
 
-  const workoutItems = dummyData.exerciseData.map((ex) => {
+    fetchExercises();
+  }, []);
+
+  console.log(workoutHistory);
+
+  //Need to work on this reducer to group the exercises by type on history
+  // const reducedWorkoutHistory = workoutHistory
+  //   .map((item) => {
+  //     return item.exercises;
+  //   })
+  //   .reduce((prevName, { exerciseName, reps, weight }) => {
+  //     (prevName[exerciseName] = prevName[exerciseName] || []).push({
+  //       reps: reps,
+  //       weight: weight,
+  //     });
+  //     return prevName;
+  //   }, {});
+  // console.log(reducedWorkoutHistory);
+  const workoutItems = workoutHistory.map((ex) => {
     return (
       <Fragment>
         <div className={styles.position}>
@@ -75,7 +66,7 @@ const WorkoutHistory = (props) => {
             {ex.exercises.map((item) => {
               return (
                 <HistoryItem
-                  name={item.name}
+                  name={item.exerciseName}
                   weight={item.weight}
                   unit={item.unit}
                   reps={item.reps}
@@ -92,7 +83,7 @@ const WorkoutHistory = (props) => {
     setExerciseFiltered(true);
   };
 
-  const filteredWorkoutItems = dummyData.exerciseData.map((ex) => {
+  const filteredWorkoutItems = workoutHistory.map((ex) => {
     return (
       <Fragment>
         <div className={styles.position}>
@@ -100,12 +91,12 @@ const WorkoutHistory = (props) => {
           <ul>
             {ex.exercises
               .filter((item) => {
-                return item.name === refSelectExercise.current.value;
+                return item.exerciseName === refSelectExercise.current.value;
               })
               .map((item) => {
                 return (
                   <HistoryItem
-                    name={item.name}
+                    name={item.exerciseName}
                     weight={item.weight}
                     unit={item.unit}
                     reps={item.reps}

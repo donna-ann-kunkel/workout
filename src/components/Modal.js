@@ -10,20 +10,31 @@ const Modal = (props) => {
   const cartCtx = useContext(CartContext);
   const [didSubmit, setDidSubmit] = useState(false);
 
+  console.log(cartCtx.exercise);
   const reducedData = cartCtx.exercise.reduce(
-    (prevName, { exerciseName, reps, weight }) => {
+    (prevName, { exerciseName, reps, weight, id }) => {
       (prevName[exerciseName] = prevName[exerciseName] || []).push({
         reps: reps,
         weight: weight,
+        id: id,
       });
       return prevName;
     },
     {}
   );
 
-  const todayDate = new Date();
-  console.log(todayDate);
-  console.log(cartCtx.exercise);
+  const exerciseNonNull = cartCtx.exercise.filter(
+    (arr) => Object.keys(arr).length !== 0
+  );
+
+  const todayDate = new Date().toLocaleDateString("en-us", {
+    weekday: "long",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+  console.log(typeof todayDate);
+
   const submitWorkoutHandler = async () => {
     await fetch(
       "https://udemy-react-http-d7691-default-rtdb.firebaseio.com/userExercise.json",
@@ -33,7 +44,7 @@ const Modal = (props) => {
           userId: "012345",
           exerciseData: [
             {
-              exercise: cartCtx.exercise,
+              exercise: exerciseNonNull,
               date: todayDate,
             },
           ],
@@ -42,13 +53,19 @@ const Modal = (props) => {
     );
 
     setDidSubmit(true);
-    // cartCtx.clearCart();  //need to add this to the provider
+    cartCtx.clearCart();
+    props.onClose();
   };
 
   const cartItems = (
     <ul>
       {Object.entries(reducedData).map((item) => (
-        <CartItem exerciseName={item[0]} repArray={item[1]} />
+        <CartItem
+          key={item[1].id}
+          id={item[1].id}
+          exerciseName={item[0]}
+          repArray={item[1]}
+        />
       ))}
     </ul>
   );
