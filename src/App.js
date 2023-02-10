@@ -28,9 +28,6 @@ function App() {
     setHistoryIsShown(false);
   };
 
-  const hideWorkoutFormHandler = () => {
-    setWorkoutFormIsShown(false);
-  };
   const showWorkoutHistoryHandler = () => {
     setHistoryIsShown(true);
     setWorkoutFormIsShown(false);

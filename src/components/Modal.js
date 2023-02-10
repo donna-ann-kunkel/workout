@@ -10,7 +10,6 @@ const Modal = (props) => {
   const cartCtx = useContext(CartContext);
   const [didSubmit, setDidSubmit] = useState(false);
 
-  console.log(cartCtx.exercise);
   const reducedData = cartCtx.exercise.reduce(
     (prevName, { exerciseName, reps, weight, id }) => {
       (prevName[exerciseName] = prevName[exerciseName] || []).push({
@@ -33,7 +32,6 @@ const Modal = (props) => {
     month: "short",
     day: "numeric",
   });
-  console.log(typeof todayDate);
 
   const submitWorkoutHandler = async () => {
     await fetch(
@@ -58,7 +56,7 @@ const Modal = (props) => {
   };
 
   const cartItems = (
-    <ul>
+    <ul className={styles.list}>
       {Object.entries(reducedData).map((item) => (
         <CartItem
           key={item[1].id}

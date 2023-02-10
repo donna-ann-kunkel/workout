@@ -2,7 +2,8 @@ import React, { Fragment, useEffect } from "react";
 import { useState } from "react";
 import WorkoutItem from "./WorkoutItem";
 import styles from "./Workout.module.css";
-import { AiOutlineSearch } from "react-icons/ai";
+
+import Search from "./Search";
 
 const Workout = () => {
   const [exercises, setExercises] = useState([]);
@@ -13,6 +14,8 @@ const Workout = () => {
   const [chestFilter, setChestFilter] = useState(false);
   const [glutesFilter, setGlutesFilter] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     const fetchExercises = async () => {
@@ -41,6 +44,7 @@ const Workout = () => {
 
   const filterLegHandler = () => {
     setLegsFilter(true);
+
     setArmsFilter(false);
     setCoreFilter(false);
     setBackFilter(false);
@@ -95,10 +99,6 @@ const Workout = () => {
     closeFiltersHandler();
   };
 
-  const showFiltersHandler = () => {
-    setShowFilters(!showFilters);
-  };
-
   const closeFiltersHandler = () => {
     setShowFilters(false);
   };
@@ -140,17 +140,23 @@ const Workout = () => {
     })
     .map((ex) => <WorkoutItem key={ex.id} id={ex.id} name={ex.name} />);
 
+  const searchHandler = (searchTerm) => {
+    setSearchTerm(searchTerm);
+    setIsSearching(true);
+  };
+
+  const filteredSearch = fullExerciseList
+    .filter((ex) => {
+      return ex.name.includes(searchTerm);
+    })
+    .map((ex) => <WorkoutItem key={ex.id} id={ex.id} name={ex.name} />);
+
   return (
     <Fragment>
       <header className={styles.header}>
         <h1>Select Exercises</h1>
-        <input type="text" class={styles.input}></input>
-        <button className={styles.button}>
-          <AiOutlineSearch className={styles.icon} />
-        </button>
-        <button className={styles.button} onClick={showFiltersHandler}>
-          Filter by body part
-        </button>
+        <Search onSearch={searchHandler} />
+        <button className={styles.button}>Filter by body part</button>
         {showFilters && (
           <div className={styles.menu}>
             <button className={styles.button} onClick={filterLegHandler}>
@@ -181,6 +187,7 @@ const Workout = () => {
           !backFilter &&
           !chestFilter &&
           !glutesFilter &&
+          !isSearching &&
           workoutItems}
         {armsFilter && filteredArms}
         {coreFilter && filteredCore}
@@ -188,6 +195,7 @@ const Workout = () => {
         {chestFilter && filteredChest}
         {backFilter && filteredBack}
         {glutesFilter && filteredGlutes}
+        {isSearching && filteredSearch}
       </ul>
     </Fragment>
   );

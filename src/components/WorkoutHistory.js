@@ -1,9 +1,12 @@
 import { Fragment, useState, useRef, useEffect } from "react";
 import HistoryItem from "./HistoryItem";
 import styles from "./WorkoutHistory.module.css";
+import DateFilter from "./DateFilter";
 
 const WorkoutHistory = (props) => {
   const [isExerciseFiltered, setExerciseFiltered] = useState(false);
+  const [isDateFiltered, setDateFiltered] = useState(false);
+  const [filteredDates, setFilteredDates] = useState([]);
   const [workoutHistory, setWorkoutHistory] = useState([
     {
       workoutId: "",
@@ -109,14 +112,42 @@ const WorkoutHistory = (props) => {
     );
   });
 
+  const dateFilterHandler = (filteredDates) => {
+    setDateFiltered(true);
+    setFilteredDates(filteredDates);
+
+    console.log(isDateFiltered);
+  };
+
+  const filteredDatesDisplay = filteredDates.map((item) => {
+    console.log(filteredDates[0].workoutDate);
+    return item.exercises.map((ex) => {
+      return (
+        <Fragment>
+          <h2 className={styles.heading}>{filteredDates[0].workoutDate}</h2>
+          <HistoryItem
+            name={ex.exerciseName}
+            weight={ex.weight}
+            unit={ex.unit}
+            reps={ex.reps}
+          />
+        </Fragment>
+      );
+    });
+  });
+
   return (
     <Fragment>
-      {!isExerciseFiltered && workoutItems}
-      {isExerciseFiltered && filteredWorkoutItems}
+      {!isExerciseFiltered && !isDateFiltered && workoutItems}
+      {isExerciseFiltered && !isDateFiltered && filteredWorkoutItems}
+      {isDateFiltered && filteredDatesDisplay}
+
       <header className={styles.header}>
         <h1>Filter Exercise History</h1>
-        <label htmlFor="date">Date</label>
-        <input id="date" type="date" />
+        <DateFilter
+          workoutHistory={workoutHistory}
+          onDateFilter={dateFilterHandler}
+        />
         <label htmlFor="exercise">Exercise Name</label>
         <select
           name="exercise"
@@ -124,11 +155,12 @@ const WorkoutHistory = (props) => {
           onChange={filterExerciseHandler}
           ref={refSelectExercise}
         >
-          <option value="bicep curl">Bicep Curls</option>
-          <option value="tricep kickback">Tricep Kickback</option>
-          <option value="chest press">Chest Press</option>
-          <option value="squat">Squat</option>
-          <option value="deadlift">Deadlift</option>
+          <option value="Bicep Curl">Bicep Curls</option>
+          <option value="Tricep Kickback">Tricep Kickback</option>
+          <option value="Chest Press">Chest Press</option>
+          <option value="Chest Fly">Chest Fly</option>
+          <option value="Squat">Squat</option>
+          <option value="Dead Lift">Dead Lift</option>
         </select>
       </header>
     </Fragment>
