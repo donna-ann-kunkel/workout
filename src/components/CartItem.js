@@ -11,6 +11,7 @@ const CartItem = (props) => {
   const removeItemHandler = (id) => {
     cartCtx.removeItems(id);
   };
+
   const repDisplay = props.repArray.map((item) => {
     return (
       <Fragment>

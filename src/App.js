@@ -4,7 +4,7 @@ import Modal from "./components/Modal";
 
 import CartProvider from "./store/CartProvider";
 import { useState } from "react";
-import WorkoutHistory from "./components/WorkoutHistory";
+import WorkoutHistory from "./components//history/WorkoutHistory";
 
 function App() {
   const [cartIsShown, setCartIsShown] = useState(false);

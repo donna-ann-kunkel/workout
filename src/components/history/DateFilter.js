@@ -1,8 +1,7 @@
 import { useRef, Fragment } from "react";
-import styles from "./WorkoutHistory.module.css";
+import styles from "./DateFilter.module.css";
 
 const DateFilter = (props) => {
-  console.log(props.workoutHistory);
   const refSelectDate = useRef("");
 
   // issue is workoutDay is showing up one day off??????? no idea why
@@ -19,20 +18,19 @@ const DateFilter = (props) => {
     const inputYear = new Date(refSelectDate.current.value).getYear();
     const inputDay = new Date(refSelectDate.current.value).getDate();
 
-    console.log(inputMonth);
-
     const filteredDates = props.workoutHistory.filter(
       (ex) =>
         new Date(ex.workoutDate).getYear() === inputYear &&
         new Date(ex.workoutDate).getMonth() === inputMonth
     );
-    console.log(filteredDates);
+
     props.onDateFilter(filteredDates);
   };
   return (
     <Fragment>
       <label htmlFor="date">Date</label>
       <input
+        className={styles.input}
         id="date"
         type="date"
         ref={refSelectDate}

@@ -55,18 +55,26 @@ const Modal = (props) => {
     props.onClose();
   };
 
-  const cartItems = (
-    <ul className={styles.list}>
-      {Object.entries(reducedData).map((item) => (
-        <CartItem
-          key={item[1].id}
-          id={item[1].id}
-          exerciseName={item[0]}
-          repArray={item[1]}
-        />
-      ))}
-    </ul>
-  );
+  console.log(reducedData);
+  console.log(cartCtx.exercise);
+
+  let cartItems;
+  if (cartCtx.exercise.length === 1) {
+    cartItems = <p className={styles.notice}>Please add exercises!</p>;
+  } else {
+    cartItems = (
+      <ul className={styles.list}>
+        {Object.entries(reducedData).map((item) => (
+          <CartItem
+            key={item[1].id}
+            id={item[1].id}
+            exerciseName={item[0]}
+            repArray={item[1]}
+          />
+        ))}
+      </ul>
+    );
+  }
 
   return (
     <Fragment>

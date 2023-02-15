@@ -2,11 +2,14 @@ import { Fragment, useState, useRef, useEffect } from "react";
 import HistoryItem from "./HistoryItem";
 import styles from "./WorkoutHistory.module.css";
 import DateFilter from "./DateFilter";
+import { AiOutlineClose } from "react-icons/ai";
+import ExerciseFilter from "./ExerciseFilter";
 
 const WorkoutHistory = (props) => {
   const [isExerciseFiltered, setExerciseFiltered] = useState(false);
   const [isDateFiltered, setDateFiltered] = useState(false);
   const [filteredDates, setFilteredDates] = useState([]);
+  const [filteredExercises, setFilteredExercises] = useState([]);
   const [workoutHistory, setWorkoutHistory] = useState([
     {
       workoutId: "",
@@ -21,7 +24,6 @@ const WorkoutHistory = (props) => {
       ],
     },
   ]);
-  const refSelectExercise = useRef("");
 
   useEffect(() => {
     const fetchExercises = async () => {
@@ -45,8 +47,6 @@ const WorkoutHistory = (props) => {
     fetchExercises();
   }, []);
 
-  console.log(workoutHistory);
-
   //Need to work on this reducer to group the exercises by type on history
   // const reducedWorkoutHistory = workoutHistory
   //   .map((item) => {
@@ -60,6 +60,7 @@ const WorkoutHistory = (props) => {
   //     return prevName;
   //   }, {});
   // console.log(reducedWorkoutHistory);
+
   const workoutItems = workoutHistory.map((ex) => {
     return (
       <Fragment>
@@ -82,32 +83,41 @@ const WorkoutHistory = (props) => {
     );
   });
 
-  const filterExerciseHandler = () => {
+  const filterExerciseHandler = (filteredExercises) => {
     setExerciseFiltered(true);
+    setFilteredExercises(filteredExercises);
+    console.log(filteredExercises);
   };
 
-  const filteredWorkoutItems = workoutHistory.map((ex) => {
+  const dateToDisplay = filteredExercises.map((ex) => {
+    if (ex.length < 1) {
+      return null;
+    } else {
+      return workoutHistory[filteredExercises.indexOf(ex)].workoutDate;
+    }
+  });
+
+  const filteredWorkoutItems = filteredExercises.map((entry) => {
+    console.log(filteredExercises.indexOf(entry));
     return (
       <Fragment>
-        <div className={styles.position}>
-          <h2 className={styles.date}>{ex.workoutDate}</h2>
-          <ul>
-            {ex.exercises
-              .filter((item) => {
-                return item.exerciseName === refSelectExercise.current.value;
-              })
-              .map((item) => {
-                return (
-                  <HistoryItem
-                    name={item.exerciseName}
-                    weight={item.weight}
-                    unit={item.unit}
-                    reps={item.reps}
-                  />
-                );
-              })}
-          </ul>
-        </div>
+        <ul>
+          {entry.map((ex) => {
+            return (
+              <Fragment>
+                <h2 className={styles.date}>
+                  {dateToDisplay[filteredExercises.indexOf(entry)]}
+                </h2>
+                <HistoryItem
+                  name={ex.exerciseName}
+                  weight={ex.weight}
+                  unit={ex.unit}
+                  reps={ex.reps}
+                />
+              </Fragment>
+            );
+          })}
+        </ul>
       </Fragment>
     );
   });
@@ -115,16 +125,17 @@ const WorkoutHistory = (props) => {
   const dateFilterHandler = (filteredDates) => {
     setDateFiltered(true);
     setFilteredDates(filteredDates);
+  };
 
-    console.log(isDateFiltered);
+  const removeDateFilter = () => {
+    setDateFiltered(false);
   };
 
   const filteredDatesDisplay = filteredDates.map((item) => {
-    console.log(filteredDates[0].workoutDate);
     return item.exercises.map((ex) => {
       return (
         <Fragment>
-          <h2 className={styles.heading}>{filteredDates[0].workoutDate}</h2>
+          <h2 className={styles.date}>{filteredDates[0].workoutDate}</h2>
           <HistoryItem
             name={ex.exerciseName}
             weight={ex.weight}
@@ -136,6 +147,10 @@ const WorkoutHistory = (props) => {
     });
   });
 
+  const removeBodyFilter = () => {
+    setExerciseFiltered(false);
+  };
+
   return (
     <Fragment>
       {!isExerciseFiltered && !isDateFiltered && workoutItems}
@@ -144,24 +159,31 @@ const WorkoutHistory = (props) => {
 
       <header className={styles.header}>
         <h1>Filter Exercise History</h1>
-        <DateFilter
-          workoutHistory={workoutHistory}
-          onDateFilter={dateFilterHandler}
-        />
-        <label htmlFor="exercise">Exercise Name</label>
-        <select
-          name="exercise"
-          id="exercise"
-          onChange={filterExerciseHandler}
-          ref={refSelectExercise}
-        >
-          <option value="Bicep Curl">Bicep Curls</option>
-          <option value="Tricep Kickback">Tricep Kickback</option>
-          <option value="Chest Press">Chest Press</option>
-          <option value="Chest Fly">Chest Fly</option>
-          <option value="Squat">Squat</option>
-          <option value="Dead Lift">Dead Lift</option>
-        </select>
+        <div>
+          <DateFilter
+            workoutHistory={workoutHistory}
+            onDateFilter={dateFilterHandler}
+          />
+          <button className={styles.button} onClick={removeDateFilter}>
+            <AiOutlineClose
+              className={styles.icon}
+              onClick={removeDateFilter}
+            />
+          </button>
+        </div>
+        <div>
+          <ExerciseFilter
+            workoutHistory={workoutHistory}
+            onExerciseFilter={filterExerciseHandler}
+          />
+
+          <button className={styles.button}>
+            <AiOutlineClose
+              className={styles.icon}
+              onClick={removeBodyFilter}
+            />
+          </button>
+        </div>
       </header>
     </Fragment>
   );

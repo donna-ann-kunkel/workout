@@ -33,12 +33,13 @@ const Header = (props) => {
 
       {menuIsShown && (
         <nav className={styles.nav}>
-          <button className={styles.button} onClick={showHistoryHandler}>
-            View Workout History
-          </button>
           <button className={styles.button} onClick={showFormHandler}>
             Enter New Exercises
           </button>
+          <button className={styles.button} onClick={showHistoryHandler}>
+            View Workout History
+          </button>
+
           <button className={styles.button} onClick={showCartHandler}>
             Submit Workout
           </button>
