@@ -103,6 +103,10 @@ const Workout = () => {
     setShowFilters(false);
   };
 
+  const showFilterHandler = () => {
+    setShowFilters(true);
+  };
+
   let workoutItems = displayExerciseList.map((ex) => (
     <WorkoutItem key={ex.id} id={ex.id} name={ex.name} />
   ));
@@ -153,10 +157,29 @@ const Workout = () => {
 
   return (
     <Fragment>
-      <header className={styles.header}>
+      <ul className={styles.exerciseList}>
+        {!legsFilter &&
+          !armsFilter &&
+          !coreFilter &&
+          !backFilter &&
+          !chestFilter &&
+          !glutesFilter &&
+          !isSearching &&
+          workoutItems}
+        {armsFilter && filteredArms}
+        {coreFilter && filteredCore}
+        {legsFilter && filteredLegs}
+        {chestFilter && filteredChest}
+        {backFilter && filteredBack}
+        {glutesFilter && filteredGlutes}
+        {isSearching && filteredSearch}
+      </ul>
+      <footer className={styles.header}>
         <h1>Select Exercises</h1>
         <Search onSearch={searchHandler} />
-        <button className={styles.button}>Filter by body part</button>
+        <button className={styles.button} onClick={showFilterHandler}>
+          Filter by body part
+        </button>
         {showFilters && (
           <div className={styles.menu}>
             <button className={styles.button} onClick={filterLegHandler}>
@@ -179,24 +202,7 @@ const Workout = () => {
             </button>
           </div>
         )}
-      </header>
-      <ul className={styles.exerciseList}>
-        {!legsFilter &&
-          !armsFilter &&
-          !coreFilter &&
-          !backFilter &&
-          !chestFilter &&
-          !glutesFilter &&
-          !isSearching &&
-          workoutItems}
-        {armsFilter && filteredArms}
-        {coreFilter && filteredCore}
-        {legsFilter && filteredLegs}
-        {chestFilter && filteredChest}
-        {backFilter && filteredBack}
-        {glutesFilter && filteredGlutes}
-        {isSearching && filteredSearch}
-      </ul>
+      </footer>
     </Fragment>
   );
 };

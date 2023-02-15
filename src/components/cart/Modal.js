@@ -1,5 +1,5 @@
 import { Fragment, useContext, useState } from "react";
-import CartContext from "../store/cart-context";
+import CartContext from "../../store/cart-context";
 
 import styles from "./Modal.module.css";
 import { ReactDOM } from "react-dom";
@@ -54,9 +54,6 @@ const Modal = (props) => {
     cartCtx.clearCart();
     props.onClose();
   };
-
-  console.log(reducedData);
-  console.log(cartCtx.exercise);
 
   let cartItems;
   if (cartCtx.exercise.length === 1) {

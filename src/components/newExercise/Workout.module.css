@@ -1,9 +1,6 @@
 .exerciseList{
-    margin: 2rem;
-    position: fixed;
-        top: 10rem;
-    overflow: scroll;
-    height: 100%;
+    margin: 8rem 4rem;
+   
 }
 .button {
     font: inherit;
@@ -54,3 +51,4 @@
     bottom: 0;
     width:9rem;
 }
+

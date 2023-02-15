@@ -1,6 +1,6 @@
-import Header from "./components/Header";
-import Workout from "./components/Workout";
-import Modal from "./components/Modal";
+import Header from "./components/newExercise/Header";
+import Workout from "./components/newExercise/Workout";
+import Modal from "./components/cart/Modal";
 
 import CartProvider from "./store/CartProvider";
 import { useState } from "react";
