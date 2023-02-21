@@ -151,7 +151,7 @@ const Workout = () => {
 
   const filteredSearch = fullExerciseList
     .filter((ex) => {
-      return ex.name.includes(searchTerm);
+      return ex.name.toLowerCase().includes(searchTerm.toLowerCase());
     })
     .map((ex) => <WorkoutItem key={ex.id} id={ex.id} name={ex.name} />);
 

@@ -48,18 +48,27 @@ const WorkoutHistory = (props) => {
   }, []);
 
   //Need to work on this reducer to group the exercises by type on history
-  // const reducedWorkoutHistory = workoutHistory
-  //   .map((item) => {
-  //     return item.exercises;
-  //   })
-  //   .reduce((prevName, { exerciseName, reps, weight }) => {
-  //     (prevName[exerciseName] = prevName[exerciseName] || []).push({
-  //       reps: reps,
-  //       weight: weight,
-  //     });
-  //     return prevName;
-  //   }, {});
-  // console.log(reducedWorkoutHistory);
+  console.log(workoutHistory);
+  const reducedWorkoutHistory = workoutHistory.map((ex) => {
+    return ex.exercises.reduce(
+      (prevName, { exerciseName, reps, weight, id }) => {
+        (prevName[exerciseName] = prevName[exerciseName] || []).push({
+          reps: reps,
+          weight: weight,
+          id: id,
+        });
+        console.log(prevName);
+
+        return prevName;
+      },
+      {}
+    );
+  });
+  console.log(reducedWorkoutHistory);
+
+  console.log(Object.keys(reducedWorkoutHistory[0]));
+
+  const nameArray = Object.keys(reducedWorkoutHistory[0]);
 
   const workoutItems = workoutHistory.map((ex) => {
     return (

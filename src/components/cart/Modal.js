@@ -10,6 +10,8 @@ const Modal = (props) => {
   const cartCtx = useContext(CartContext);
   const [didSubmit, setDidSubmit] = useState(false);
 
+  console.log(cartCtx.exercise);
+
   const reducedData = cartCtx.exercise.reduce(
     (prevName, { exerciseName, reps, weight, id }) => {
       (prevName[exerciseName] = prevName[exerciseName] || []).push({
@@ -21,6 +23,7 @@ const Modal = (props) => {
     },
     {}
   );
+  console.log(reducedData);
 
   const exerciseNonNull = cartCtx.exercise.filter(
     (arr) => Object.keys(arr).length !== 0
@@ -77,16 +80,18 @@ const Modal = (props) => {
     <Fragment>
       <div className={styles.backdrop} onClick={props.onClose}></div>
       <div className={styles.modal}>
-        <div>
-          <div>{cartItems}</div>
-        </div>
+        <div className={styles.modalBody}>
+          <div>
+            <div>{cartItems}</div>
+          </div>
 
-        <button className={styles.button} onClick={props.onClose}>
-          Close
-        </button>
-        <button className={styles.button} onClick={submitWorkoutHandler}>
-          Complete Workout
-        </button>
+          <button className={styles.button} onClick={props.onClose}>
+            Close
+          </button>
+          <button className={styles.button} onClick={submitWorkoutHandler}>
+            Complete Workout
+          </button>
+        </div>
       </div>
     </Fragment>
   );

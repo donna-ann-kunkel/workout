@@ -13,6 +13,7 @@ const CartItem = (props) => {
   };
 
   const repDisplay = props.repArray.map((item) => {
+    console.log(props.repArray);
     return (
       <Fragment>
         <li>
