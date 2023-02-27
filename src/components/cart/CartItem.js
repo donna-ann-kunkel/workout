@@ -4,7 +4,6 @@ import CartContext from "../../store/cart-context";
 
 const CartItem = (props) => {
   const cartCtx = useContext(CartContext);
-  console.log(cartCtx.exercise);
 
   if (props.exerciseName === "undefined") return;
 

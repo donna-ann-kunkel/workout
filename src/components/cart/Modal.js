@@ -10,8 +10,6 @@ const Modal = (props) => {
   const cartCtx = useContext(CartContext);
   const [didSubmit, setDidSubmit] = useState(false);
 
-  console.log(cartCtx.exercise);
-
   const reducedData = cartCtx.exercise.reduce(
     (prevName, { exerciseName, reps, weight, id }) => {
       (prevName[exerciseName] = prevName[exerciseName] || []).push({
@@ -57,6 +55,8 @@ const Modal = (props) => {
     cartCtx.clearCart();
     props.onClose();
   };
+
+  console.log(Object.entries(reducedData));
 
   let cartItems;
   if (cartCtx.exercise.length === 1) {

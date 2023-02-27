@@ -1,6 +1,6 @@
 import styles from "./WorkoutItem.module.css";
 import CartContext from "../../store/cart-context";
-import { useContext, useRef } from "react";
+import { useContext, useRef, Fragment } from "react";
 
 const WorkoutItem = (props) => {
   const cartCtx = useContext(CartContext);
@@ -20,9 +20,8 @@ const WorkoutItem = (props) => {
       reps: enteredReps,
       unit: enteredUnit,
     });
-    //NEED TO BLANK OUT FORM INPUTS AFTER ADDING. NOT SURE HOW TO DO THIS THOUGH...
-    // document.getElementById("addExerciseForm").reset();
-    // document.querySelectorAll(".input").innerHTML = "";
+    refInputRep.current.value = "";
+    refInputWeight.current.value = "";
   };
 
   return (

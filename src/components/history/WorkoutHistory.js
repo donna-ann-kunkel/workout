@@ -46,7 +46,7 @@ const WorkoutHistory = (props) => {
 
     fetchExercises();
   }, []);
-
+  ///////////////////////////////////////////////////////
   //Need to work on this reducer to group the exercises by type on history
   console.log(workoutHistory);
   const reducedWorkoutHistory = workoutHistory.map((ex) => {
@@ -57,18 +57,42 @@ const WorkoutHistory = (props) => {
           weight: weight,
           id: id,
         });
-        console.log(prevName);
 
         return prevName;
       },
       {}
     );
   });
+  console.log(workoutHistory);
   console.log(reducedWorkoutHistory);
 
-  console.log(Object.keys(reducedWorkoutHistory[0]));
+  const reducedDisplay = reducedWorkoutHistory.map((entry) => {
+    console.log(reducedWorkoutHistory.indexOf(entry));
+    return Object.entries(entry).map((item) => {
+      console.log(item[1]);
+      return (
+        <Fragment>
+          <h2>
+            {workoutHistory[reducedWorkoutHistory.indexOf(entry)].workoutDate}
+          </h2>
+          <ul>
+            <li>{item[0]}</li>
+            {item[1].map((ex) => {
+              return (
+                <Fragment>
+                  <li>
+                    {ex.reps} reps {ex.weight} units
+                  </li>
+                </Fragment>
+              );
+            })}
+          </ul>
+        </Fragment>
+      );
+    });
+  });
 
-  const nameArray = Object.keys(reducedWorkoutHistory[0]);
+  ////////////////////////////////////////////////////
 
   const workoutItems = workoutHistory.map((ex) => {
     return (
@@ -79,10 +103,12 @@ const WorkoutHistory = (props) => {
             {ex.exercises.map((item) => {
               return (
                 <HistoryItem
+                  date={ex.workoutDate}
                   name={item.exerciseName}
                   weight={item.weight}
                   unit={item.unit}
                   reps={item.reps}
+                  reducedHistory={reducedWorkoutHistory}
                 />
               );
             })}
@@ -162,7 +188,7 @@ const WorkoutHistory = (props) => {
 
   return (
     <Fragment>
-      {!isExerciseFiltered && !isDateFiltered && workoutItems}
+      {!isExerciseFiltered && !isDateFiltered && reducedDisplay}
       {isExerciseFiltered && !isDateFiltered && filteredWorkoutItems}
       {isDateFiltered && filteredDatesDisplay}
 
