@@ -44,6 +44,11 @@
     background-color: #23068a;
     border-color: #23068a;
 }
+
+.headerButton{
+    border:none;
+    background:none;
+}
 .icon{
     width:3.2rem;
     height:3.2rem;

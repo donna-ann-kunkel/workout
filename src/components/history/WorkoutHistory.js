@@ -1,5 +1,5 @@
 import { Fragment, useState, useRef, useEffect } from "react";
-import HistoryItem from "./HistoryItem";
+
 import styles from "./WorkoutHistory.module.css";
 import DateFilter from "./DateFilter";
 import { AiOutlineClose } from "react-icons/ai";
@@ -47,15 +47,15 @@ const WorkoutHistory = (props) => {
     fetchExercises();
   }, []);
   ///////////////////////////////////////////////////////
-  //Need to work on this reducer to group the exercises by type on history
 
   const reducedWorkoutHistory = workoutHistory.map((ex) => {
     return ex.exercises.reduce(
-      (prevName, { exerciseName, reps, weight, id }) => {
+      (prevName, { exerciseName, reps, weight, id, unit }) => {
         (prevName[exerciseName] = prevName[exerciseName] || []).push({
           reps: reps,
           weight: weight,
           id: id,
+          unit: unit,
         });
 
         return prevName;
@@ -71,6 +71,7 @@ const WorkoutHistory = (props) => {
           {workoutHistory[reducedWorkoutHistory.indexOf(entry)].workoutDate}
         </h2>
         {Object.entries(entry).map((item) => {
+          console.log(item);
           return (
             <Fragment>
               <ul>
@@ -79,7 +80,7 @@ const WorkoutHistory = (props) => {
                   return (
                     <Fragment>
                       <li>
-                        {ex.reps} reps {ex.weight} units
+                        {ex.reps} reps {ex.weight} {ex.unit}
                       </li>
                     </Fragment>
                   );
@@ -93,30 +94,6 @@ const WorkoutHistory = (props) => {
   });
 
   ////////////////////////////////////////////////////
-
-  const workoutItems = workoutHistory.map((ex) => {
-    return (
-      <Fragment>
-        <div className={styles.position}>
-          <h2 className={styles.date}>{ex.workoutDate}</h2>
-          <ul>
-            {ex.exercises.map((item) => {
-              return (
-                <HistoryItem
-                  date={ex.workoutDate}
-                  name={item.exerciseName}
-                  weight={item.weight}
-                  unit={item.unit}
-                  reps={item.reps}
-                  reducedHistory={reducedWorkoutHistory}
-                />
-              );
-            })}
-          </ul>
-        </div>
-      </Fragment>
-    );
-  });
 
   const filterExerciseHandler = (filteredExercises) => {
     setExerciseFiltered(true);
@@ -136,11 +113,12 @@ const WorkoutHistory = (props) => {
   console.log(dateToDisplay);
 
   const reducedFilteredHistory = filteredExercises.map((ex) => {
-    return ex.reduce((prevName, { exerciseName, reps, weight, id }) => {
+    return ex.reduce((prevName, { exerciseName, reps, weight, id, unit }) => {
       (prevName[exerciseName] = prevName[exerciseName] || []).push({
         reps: reps,
         weight: weight,
         id: id,
+        unit: unit,
       });
 
       return prevName;
@@ -190,11 +168,12 @@ const WorkoutHistory = (props) => {
 
   const reducedDateHistory = filteredDates.map((ex) => {
     return ex.exercises.reduce(
-      (prevName, { exerciseName, reps, weight, id }) => {
+      (prevName, { exerciseName, reps, weight, id, unit }) => {
         (prevName[exerciseName] = prevName[exerciseName] || []).push({
           reps: reps,
           weight: weight,
           id: id,
+          unit: unit,
         });
 
         return prevName;
@@ -217,7 +196,7 @@ const WorkoutHistory = (props) => {
                   return (
                     <Fragment>
                       <li>
-                        {ex.reps} reps {ex.weight} units
+                        {ex.reps} reps {ex.weight} {ex.unit}
                       </li>
                     </Fragment>
                   );
@@ -229,22 +208,6 @@ const WorkoutHistory = (props) => {
       </Fragment>
     );
   });
-  /////////////////////////////////////////////////////////////////////
-  // const filteredDatesDisplay = filteredDates.map((item) => {
-  //   return item.exercises.map((ex) => {
-  //     return (
-  //       <Fragment>
-  //         <h2 className={styles.date}>{filteredDates[0].workoutDate}</h2>
-  //         <HistoryItem
-  //           name={ex.exerciseName}
-  //           weight={ex.weight}
-  //           unit={ex.unit}
-  //           reps={ex.reps}
-  //         />
-  //       </Fragment>
-  //     );
-  //   });
-  // });
 
   const removeBodyFilter = () => {
     setExerciseFiltered(false);

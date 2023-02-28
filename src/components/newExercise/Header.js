@@ -1,6 +1,6 @@
-import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import { AiOutlineMenu, AiOutlineClose, AiOutlineLogin } from "react-icons/ai";
 import styles from "./Header.module.css";
-import { useState } from "react";
+import { useState, Fragment } from "react";
 
 const Header = (props) => {
   const [menuIsShown, setMenuIsShown] = useState(false);
@@ -26,6 +26,9 @@ const Header = (props) => {
     closeMenuHandler();
     props.onShowCart();
   };
+  const signInHandler = () => {
+    props.onShowSignIn();
+  };
 
   return (
     <header className={styles.header}>
@@ -48,7 +51,14 @@ const Header = (props) => {
       )}
 
       {!menuIsShown && (
-        <AiOutlineMenu className={styles.icon} onClick={showMenuHandler} />
+        <div>
+          <button className={styles.headerButton} onClick={showMenuHandler}>
+            <AiOutlineMenu className={styles.icon} />
+          </button>
+          <button className={styles.headerButton} onClick={signInHandler}>
+            <AiOutlineLogin className={styles.icon} />
+          </button>
+        </div>
       )}
     </header>
   );
