@@ -4,9 +4,6 @@ const ExerciseFilter = (props) => {
   const refSelectExercise = useRef("");
 
   const filterExerciseHandler = () => {
-    console.log(props.workoutHistory);
-    //need to figure out how to keep the date when filtering
-
     const filteredExercises = props.workoutHistory.map((ex) => {
       return ex.exercises.filter((item) => {
         return item.exerciseName === refSelectExercise.current.value;

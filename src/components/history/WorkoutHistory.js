@@ -48,7 +48,7 @@ const WorkoutHistory = (props) => {
   }, []);
   ///////////////////////////////////////////////////////
   //Need to work on this reducer to group the exercises by type on history
-  console.log(workoutHistory);
+
   const reducedWorkoutHistory = workoutHistory.map((ex) => {
     return ex.exercises.reduce(
       (prevName, { exerciseName, reps, weight, id }) => {
@@ -63,33 +63,33 @@ const WorkoutHistory = (props) => {
       {}
     );
   });
-  console.log(workoutHistory);
-  console.log(reducedWorkoutHistory);
 
   const reducedDisplay = reducedWorkoutHistory.map((entry) => {
-    console.log(reducedWorkoutHistory.indexOf(entry));
-    return Object.entries(entry).map((item) => {
-      console.log(item[1]);
-      return (
-        <Fragment>
-          <h2>
-            {workoutHistory[reducedWorkoutHistory.indexOf(entry)].workoutDate}
-          </h2>
-          <ul>
-            <li>{item[0]}</li>
-            {item[1].map((ex) => {
-              return (
-                <Fragment>
-                  <li>
-                    {ex.reps} reps {ex.weight} units
-                  </li>
-                </Fragment>
-              );
-            })}
-          </ul>
-        </Fragment>
-      );
-    });
+    return (
+      <Fragment>
+        <h2>
+          {workoutHistory[reducedWorkoutHistory.indexOf(entry)].workoutDate}
+        </h2>
+        {Object.entries(entry).map((item) => {
+          return (
+            <Fragment>
+              <ul>
+                <li>{item[0]}</li>
+                {item[1].map((ex) => {
+                  return (
+                    <Fragment>
+                      <li>
+                        {ex.reps} reps {ex.weight} units
+                      </li>
+                    </Fragment>
+                  );
+                })}
+              </ul>
+            </Fragment>
+          );
+        })}
+      </Fragment>
+    );
   });
 
   ////////////////////////////////////////////////////
@@ -132,27 +132,47 @@ const WorkoutHistory = (props) => {
     }
   });
 
-  const filteredWorkoutItems = filteredExercises.map((entry) => {
-    console.log(filteredExercises.indexOf(entry));
+  console.log(filteredExercises);
+  console.log(dateToDisplay);
+
+  const reducedFilteredHistory = filteredExercises.map((ex) => {
+    return ex.reduce((prevName, { exerciseName, reps, weight, id }) => {
+      (prevName[exerciseName] = prevName[exerciseName] || []).push({
+        reps: reps,
+        weight: weight,
+        id: id,
+      });
+
+      return prevName;
+    }, {});
+  });
+  console.log(reducedFilteredHistory);
+
+  const filteredWorkoutItems = reducedFilteredHistory.map((entry) => {
     return (
       <Fragment>
-        <ul>
-          {entry.map((ex) => {
+        <h2>{dateToDisplay[reducedFilteredHistory.indexOf(entry)]}</h2>
+
+        <Fragment>
+          {Object.entries(entry).map((item) => {
             return (
               <Fragment>
-                <h2 className={styles.date}>
-                  {dateToDisplay[filteredExercises.indexOf(entry)]}
-                </h2>
-                <HistoryItem
-                  name={ex.exerciseName}
-                  weight={ex.weight}
-                  unit={ex.unit}
-                  reps={ex.reps}
-                />
+                <ul>
+                  <li>{item[0]}</li>
+                  {item[1].map((ex) => {
+                    return (
+                      <Fragment>
+                        <li>
+                          {ex.reps} reps {ex.weight} units
+                        </li>
+                      </Fragment>
+                    );
+                  })}
+                </ul>
               </Fragment>
             );
           })}
-        </ul>
+        </Fragment>
       </Fragment>
     );
   });
@@ -165,22 +185,66 @@ const WorkoutHistory = (props) => {
   const removeDateFilter = () => {
     setDateFiltered(false);
   };
+  /////////////////////////////////////////////////////////////////
+  console.log(filteredDates);
 
-  const filteredDatesDisplay = filteredDates.map((item) => {
-    return item.exercises.map((ex) => {
-      return (
-        <Fragment>
-          <h2 className={styles.date}>{filteredDates[0].workoutDate}</h2>
-          <HistoryItem
-            name={ex.exerciseName}
-            weight={ex.weight}
-            unit={ex.unit}
-            reps={ex.reps}
-          />
-        </Fragment>
-      );
-    });
+  const reducedDateHistory = filteredDates.map((ex) => {
+    return ex.exercises.reduce(
+      (prevName, { exerciseName, reps, weight, id }) => {
+        (prevName[exerciseName] = prevName[exerciseName] || []).push({
+          reps: reps,
+          weight: weight,
+          id: id,
+        });
+
+        return prevName;
+      },
+      {}
+    );
   });
+  console.log(reducedDateHistory);
+
+  const filteredDatesDisplay = reducedDateHistory.map((entry) => {
+    return (
+      <Fragment>
+        <h2 className={styles.date}>{filteredDates[0].workoutDate}</h2>
+        {Object.entries(entry).map((item) => {
+          return (
+            <Fragment>
+              <ul>
+                <li>{item[0]}</li>
+                {item[1].map((ex) => {
+                  return (
+                    <Fragment>
+                      <li>
+                        {ex.reps} reps {ex.weight} units
+                      </li>
+                    </Fragment>
+                  );
+                })}
+              </ul>
+            </Fragment>
+          );
+        })}
+      </Fragment>
+    );
+  });
+  /////////////////////////////////////////////////////////////////////
+  // const filteredDatesDisplay = filteredDates.map((item) => {
+  //   return item.exercises.map((ex) => {
+  //     return (
+  //       <Fragment>
+  //         <h2 className={styles.date}>{filteredDates[0].workoutDate}</h2>
+  //         <HistoryItem
+  //           name={ex.exerciseName}
+  //           weight={ex.weight}
+  //           unit={ex.unit}
+  //           reps={ex.reps}
+  //         />
+  //       </Fragment>
+  //     );
+  //   });
+  // });
 
   const removeBodyFilter = () => {
     setExerciseFiltered(false);
