@@ -1,0 +1,22 @@
+.logIn{
+    background-color:#fff;
+    padding-top:10rem;
+    width:100vw;
+    height:100vh;
+    display:flex;
+    flex-direction: column;
+    gap:1.2rem;
+}
+.logInButton{
+    font: inherit;
+    width:fit-content;
+    cursor: pointer;
+    background-color: #23068a;
+    border: 1px solid #23068a;
+    color: white;
+    padding: 0.25rem 1rem;
+    margin-left: 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    align-self: center;
+}

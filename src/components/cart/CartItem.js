@@ -16,7 +16,7 @@ const CartItem = (props) => {
     return (
       <Fragment>
         <li>
-          {item.reps} reps {item.weight} lb
+          {item.reps} reps {item.weight} {item.unit}
         </li>
         <button
           className={styles.button}

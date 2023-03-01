@@ -43,6 +43,7 @@ const Workout = () => {
   let displayExerciseList = exercises.slice();
 
   const filterLegHandler = () => {
+    setIsSearching(false);
     setLegsFilter(true);
 
     setArmsFilter(false);
@@ -53,6 +54,7 @@ const Workout = () => {
     closeFiltersHandler();
   };
   const filterCoreHandler = () => {
+    setIsSearching(false);
     setCoreFilter(true);
     setLegsFilter(false);
     setArmsFilter(false);
@@ -63,6 +65,7 @@ const Workout = () => {
   };
 
   const filteredArmsHandler = () => {
+    setIsSearching(false);
     setLegsFilter(false);
     setArmsFilter(true);
     setCoreFilter(false);
@@ -72,6 +75,7 @@ const Workout = () => {
     closeFiltersHandler();
   };
   const filterBackHandler = () => {
+    setIsSearching(false);
     setBackFilter(true);
     setLegsFilter(false);
     setArmsFilter(false);
@@ -81,6 +85,7 @@ const Workout = () => {
     closeFiltersHandler();
   };
   const filterChestHandler = () => {
+    setIsSearching(false);
     setBackFilter(false);
     setLegsFilter(false);
     setArmsFilter(false);
@@ -90,6 +95,7 @@ const Workout = () => {
     closeFiltersHandler();
   };
   const filterGlutesHandler = () => {
+    setIsSearching(false);
     setBackFilter(false);
     setLegsFilter(false);
     setArmsFilter(false);

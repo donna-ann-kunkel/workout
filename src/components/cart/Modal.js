@@ -11,11 +11,12 @@ const Modal = (props) => {
   const [didSubmit, setDidSubmit] = useState(false);
 
   const reducedData = cartCtx.exercise.reduce(
-    (prevName, { exerciseName, reps, weight, id }) => {
+    (prevName, { exerciseName, reps, weight, id, unit }) => {
       (prevName[exerciseName] = prevName[exerciseName] || []).push({
         reps: reps,
         weight: weight,
         id: id,
+        unit: unit,
       });
       return prevName;
     },
