@@ -12,16 +12,17 @@ const DateFilter = (props) => {
   //can maybe change syntax so that we return the array??
 
   const dateFilterHandler = () => {
-    // setDateFiltered(true);
-
-    const inputMonth = new Date(refSelectDate.current.value).getMonth();
-    const inputYear = new Date(refSelectDate.current.value).getYear();
-    const inputDay = new Date(refSelectDate.current.value).getDate();
+    const inputMonth = new Date(refSelectDate.current.value).getUTCMonth();
+    const inputYear = new Date(refSelectDate.current.value).getUTCFullYear();
+    const inputDay = new Date(refSelectDate.current.value).getUTCDate();
+    console.log(inputDay);
+    console.log(props.workoutHistory);
 
     const filteredDates = props.workoutHistory.filter(
       (ex) =>
-        new Date(ex.workoutDate).getYear() === inputYear &&
-        new Date(ex.workoutDate).getMonth() === inputMonth
+        new Date(ex.workoutDate).getUTCFullYear() === inputYear &&
+        new Date(ex.workoutDate).getUTCMonth() === inputMonth &&
+        new Date(ex.workoutDate).getUTCDate() === inputDay
     );
 
     props.onDateFilter(filteredDates);

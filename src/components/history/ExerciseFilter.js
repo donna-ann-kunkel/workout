@@ -22,6 +22,7 @@ const ExerciseFilter = (props) => {
         onChange={filterExerciseHandler}
         ref={refSelectExercise}
       >
+        <option>Select Exercise</option>
         <option value="Bicep Curl">Bicep Curls</option>
         <option value="Tricep Kickback">Tricep Kickback</option>
         <option value="Chest Press">Chest Press</option>

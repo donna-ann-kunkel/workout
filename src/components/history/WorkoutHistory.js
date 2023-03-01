@@ -71,7 +71,6 @@ const WorkoutHistory = (props) => {
           {workoutHistory[reducedWorkoutHistory.indexOf(entry)].workoutDate}
         </h2>
         {Object.entries(entry).map((item) => {
-          console.log(item);
           return (
             <Fragment>
               <ul>
@@ -97,8 +96,8 @@ const WorkoutHistory = (props) => {
 
   const filterExerciseHandler = (filteredExercises) => {
     setExerciseFiltered(true);
+    setDateFiltered(false);
     setFilteredExercises(filteredExercises);
-    console.log(filteredExercises);
   };
 
   const dateToDisplay = filteredExercises.map((ex) => {
@@ -108,9 +107,6 @@ const WorkoutHistory = (props) => {
       return workoutHistory[filteredExercises.indexOf(ex)].workoutDate;
     }
   });
-
-  console.log(filteredExercises);
-  console.log(dateToDisplay);
 
   const reducedFilteredHistory = filteredExercises.map((ex) => {
     return ex.reduce((prevName, { exerciseName, reps, weight, id, unit }) => {
@@ -124,7 +120,6 @@ const WorkoutHistory = (props) => {
       return prevName;
     }, {});
   });
-  console.log(reducedFilteredHistory);
 
   const filteredWorkoutItems = reducedFilteredHistory.map((entry) => {
     return (
@@ -157,6 +152,7 @@ const WorkoutHistory = (props) => {
 
   const dateFilterHandler = (filteredDates) => {
     setDateFiltered(true);
+    setExerciseFiltered(false);
     setFilteredDates(filteredDates);
   };
 
@@ -164,7 +160,6 @@ const WorkoutHistory = (props) => {
     setDateFiltered(false);
   };
   /////////////////////////////////////////////////////////////////
-  console.log(filteredDates);
 
   const reducedDateHistory = filteredDates.map((ex) => {
     return ex.exercises.reduce(
@@ -181,7 +176,6 @@ const WorkoutHistory = (props) => {
       {}
     );
   });
-  console.log(reducedDateHistory);
 
   const filteredDatesDisplay = reducedDateHistory.map((entry) => {
     return (
