@@ -12,6 +12,16 @@
     margin-top: 8rem;
     
 }
+
+.list {
+    list-style-type: none;
+    background-color: white;
+    padding: 0.75rem;
+    margin: 1rem;
+    border-radius: 1.2rem;
+        }
+
+
 .header {
     position: fixed;
     bottom: 0rem;

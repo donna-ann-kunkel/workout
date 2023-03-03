@@ -1,4 +1,5 @@
 import { Fragment, useRef } from "react";
+import styles from "./ExerciseFilter.module.css";
 
 const ExerciseFilter = (props) => {
   const refSelectExercise = useRef("");
@@ -21,6 +22,7 @@ const ExerciseFilter = (props) => {
         id="exercise"
         onChange={filterExerciseHandler}
         ref={refSelectExercise}
+        className={styles.select}
       >
         <option>Select Exercise</option>
         <option value="Bicep Curl">Bicep Curls</option>

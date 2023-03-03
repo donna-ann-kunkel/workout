@@ -1,6 +1,6 @@
 import { AiOutlineMenu, AiOutlineClose, AiOutlineLogin } from "react-icons/ai";
 import styles from "./Header.module.css";
-import { useState, Fragment } from "react";
+import { useState } from "react";
 
 const Header = (props) => {
   const [menuIsShown, setMenuIsShown] = useState(false);
@@ -32,7 +32,7 @@ const Header = (props) => {
 
   return (
     <header className={styles.header}>
-      <h1>Builder Buddy</h1>
+      <h1 className={styles.title}>Builder Buddy</h1>
 
       {menuIsShown && (
         <nav className={styles.nav}>

@@ -110,7 +110,7 @@ const Workout = () => {
   };
 
   const showFilterHandler = () => {
-    setShowFilters(true);
+    setShowFilters(!showFilters);
   };
 
   let workoutItems = displayExerciseList.map((ex) => (
@@ -180,34 +180,34 @@ const Workout = () => {
         {glutesFilter && filteredGlutes}
         {isSearching && filteredSearch}
       </ul>
-      <footer className={styles.header}>
+      {showFilters && (
+        <div className={styles.menu}>
+          <button className={styles.button} onClick={filterLegHandler}>
+            Legs
+          </button>
+          <button className={styles.button} onClick={filteredArmsHandler}>
+            Arms
+          </button>
+          <button className={styles.button} onClick={filterBackHandler}>
+            Back
+          </button>
+          <button className={styles.button} onClick={filterCoreHandler}>
+            Core
+          </button>
+          <button className={styles.button} onClick={filterChestHandler}>
+            Chest
+          </button>
+          <button className={styles.button} onClick={filterGlutesHandler}>
+            Glutes
+          </button>
+        </div>
+      )}
+      <footer className={styles.footer}>
         <h1>Select Exercises</h1>
         <Search onSearch={searchHandler} />
         <button className={styles.button} onClick={showFilterHandler}>
           Filter by body part
         </button>
-        {showFilters && (
-          <div className={styles.menu}>
-            <button className={styles.button} onClick={filterLegHandler}>
-              Legs
-            </button>
-            <button className={styles.button} onClick={filteredArmsHandler}>
-              Arms
-            </button>
-            <button className={styles.button} onClick={filterBackHandler}>
-              Back
-            </button>
-            <button className={styles.button} onClick={filterCoreHandler}>
-              Core
-            </button>
-            <button className={styles.button} onClick={filterChestHandler}>
-              Chest
-            </button>
-            <button className={styles.button} onClick={filterGlutesHandler}>
-              Glutes
-            </button>
-          </div>
-        )}
       </footer>
     </Fragment>
   );

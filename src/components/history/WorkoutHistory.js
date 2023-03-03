@@ -74,7 +74,7 @@ const WorkoutHistory = (props) => {
           return (
             <Fragment>
               <ul>
-                <li>{item[0]}</li>
+                <li className={styles.list}>{item[0]}</li>
                 {item[1].map((ex) => {
                   return (
                     <Fragment>
@@ -131,7 +131,7 @@ const WorkoutHistory = (props) => {
             return (
               <Fragment>
                 <ul>
-                  <li>{item[0]}</li>
+                  <li className={styles.list}>{item[0]}</li>
                   {item[1].map((ex) => {
                     return (
                       <Fragment>
@@ -185,7 +185,7 @@ const WorkoutHistory = (props) => {
           return (
             <Fragment>
               <ul>
-                <li>{item[0]}</li>
+                <li className={styles.list}>{item[0]}</li>
                 {item[1].map((ex) => {
                   return (
                     <Fragment>

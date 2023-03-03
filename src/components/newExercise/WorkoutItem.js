@@ -26,11 +26,10 @@ const WorkoutItem = (props) => {
 
   return (
     <li className={styles.list}>
-      <div>
-        <h3>{props.name}</h3>
-        <form id="addExerciseForm">
-          <div className={styles.input}>
-            <label htmlFor="repNumber"># of Reps</label>
+      <h3>{props.name}</h3>
+      <form id="addExerciseForm">
+        <div className={styles.input}>
+          <div className={styles.container} id={styles["reps"]}>
             <input
               className="input"
               id="repNumber"
@@ -38,25 +37,36 @@ const WorkoutItem = (props) => {
               ref={refInputRep}
               min={0}
             />
-            <label htmlFor="weight">Weight</label>
-            <input
-              className="input"
-              id="weight"
-              type="number"
-              ref={refInputWeight}
-              min={0}
-            />
-
-            <select name="unit" id="unit" ref={refSelectUnit}>
-              <option value="lb">lb</option>
-              <option value="kg">kg</option>
-            </select>
-            <button className={styles.button} onClick={addToCartHandler}>
-              Add to Workout
-            </button>
+            <label htmlFor="repNumber"># of Reps</label>
           </div>
-        </form>
-      </div>
+          <div className={styles.container} id={styles["weight"]}>
+            <div>
+              <input
+                className="input"
+                id="weight"
+                type="number"
+                ref={refInputWeight}
+                min={0}
+              />
+
+              <select
+                name="unit"
+                id="unit"
+                ref={refSelectUnit}
+                className={styles.select}
+              >
+                <option value="lb">lb</option>
+                <option value="kg">kg</option>
+              </select>
+            </div>
+            <label htmlFor="weight">Weight</label>
+          </div>
+
+          <button className={styles.button} onClick={addToCartHandler}>
+            Add to Workout
+          </button>
+        </div>
+      </form>
     </li>
   );
 };
