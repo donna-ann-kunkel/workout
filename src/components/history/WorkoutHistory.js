@@ -66,20 +66,20 @@ const WorkoutHistory = (props) => {
 
   const reducedDisplay = reducedWorkoutHistory.map((entry) => {
     return (
-      <Fragment>
+      <div className={styles.list}>
         <h2>
           {workoutHistory[reducedWorkoutHistory.indexOf(entry)].workoutDate}
         </h2>
         {Object.entries(entry).map((item) => {
           return (
             <Fragment>
-              <ul>
-                <li className={styles.list}>{item[0]}</li>
+              <ul className={styles.grid3}>
+                <li className={styles.exerciseName}>{item[0]}</li>
                 {item[1].map((ex) => {
                   return (
                     <Fragment>
-                      <li>
-                        {ex.reps} reps {ex.weight} {ex.unit}
+                      <li className={styles.exerciseDetails}>
+                        {ex.reps} reps - {ex.weight} {ex.unit}
                       </li>
                     </Fragment>
                   );
@@ -88,7 +88,7 @@ const WorkoutHistory = (props) => {
             </Fragment>
           );
         })}
-      </Fragment>
+      </div>
     );
   });
 
@@ -122,32 +122,35 @@ const WorkoutHistory = (props) => {
   });
 
   const filteredWorkoutItems = reducedFilteredHistory.map((entry) => {
-    return (
-      <Fragment>
-        <h2>{dateToDisplay[reducedFilteredHistory.indexOf(entry)]}</h2>
+    //this if statement prevents empty boxes from being displayed
+    if (Object.keys(entry).length > 0) {
+      return (
+        <div className={styles.list}>
+          <h2>{dateToDisplay[reducedFilteredHistory.indexOf(entry)]}</h2>
 
-        <Fragment>
-          {Object.entries(entry).map((item) => {
-            return (
-              <Fragment>
-                <ul>
-                  <li className={styles.list}>{item[0]}</li>
-                  {item[1].map((ex) => {
-                    return (
-                      <Fragment>
-                        <li>
-                          {ex.reps} reps {ex.weight} units
-                        </li>
-                      </Fragment>
-                    );
-                  })}
-                </ul>
-              </Fragment>
-            );
-          })}
-        </Fragment>
-      </Fragment>
-    );
+          <Fragment>
+            {Object.entries(entry).map((item) => {
+              return (
+                <Fragment>
+                  <ul className={styles.grid3}>
+                    <li className={styles.exerciseName}>{item[0]}</li>
+                    {item[1].map((ex) => {
+                      return (
+                        <Fragment>
+                          <li className={styles.exerciseDetails}>
+                            {ex.reps} reps - {ex.weight} {ex.unit}
+                          </li>
+                        </Fragment>
+                      );
+                    })}
+                  </ul>
+                </Fragment>
+              );
+            })}
+          </Fragment>
+        </div>
+      );
+    }
   });
 
   const dateFilterHandler = (filteredDates) => {
@@ -179,17 +182,17 @@ const WorkoutHistory = (props) => {
 
   const filteredDatesDisplay = reducedDateHistory.map((entry) => {
     return (
-      <Fragment>
+      <div className={styles.list}>
         <h2 className={styles.date}>{filteredDates[0].workoutDate}</h2>
         {Object.entries(entry).map((item) => {
           return (
             <Fragment>
               <ul>
-                <li className={styles.list}>{item[0]}</li>
+                <li className={styles.exerciseName}>{item[0]}</li>
                 {item[1].map((ex) => {
                   return (
                     <Fragment>
-                      <li>
+                      <li className={styles.exerciseDetails}>
                         {ex.reps} reps {ex.weight} {ex.unit}
                       </li>
                     </Fragment>
@@ -199,7 +202,7 @@ const WorkoutHistory = (props) => {
             </Fragment>
           );
         })}
-      </Fragment>
+      </div>
     );
   });
 
@@ -213,9 +216,9 @@ const WorkoutHistory = (props) => {
       {isExerciseFiltered && !isDateFiltered && filteredWorkoutItems}
       {isDateFiltered && filteredDatesDisplay}
 
-      <header className={styles.header}>
-        <h1>Filter Exercise History</h1>
-        <div>
+      <footer className={styles.footer}>
+        <h1 className={styles.footerTitle}>Filter History</h1>
+        <div className={styles.footerSection}>
           <DateFilter
             workoutHistory={workoutHistory}
             onDateFilter={dateFilterHandler}
@@ -227,7 +230,7 @@ const WorkoutHistory = (props) => {
             />
           </button>
         </div>
-        <div>
+        <div className={styles.footerSection}>
           <ExerciseFilter
             workoutHistory={workoutHistory}
             onExerciseFilter={filterExerciseHandler}
@@ -240,7 +243,7 @@ const WorkoutHistory = (props) => {
             />
           </button>
         </div>
-      </header>
+      </footer>
     </Fragment>
   );
 };

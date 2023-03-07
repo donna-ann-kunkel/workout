@@ -15,7 +15,7 @@ const ExerciseFilter = (props) => {
   };
 
   return (
-    <Fragment>
+    <div className={styles.container}>
       <label htmlFor="exercise">Exercise Name</label>
       <select
         name="exercise"
@@ -36,7 +36,7 @@ const ExerciseFilter = (props) => {
         <option value="Reverse Lunges">Reverse Lunges</option>
         <option value="Overhead Press">Overhead Press</option>
       </select>
-    </Fragment>
+    </div>
   );
 };
 

@@ -4,3 +4,12 @@
     border-radius:0.5rem;
     padding:0.25rem;
 }
+@media (max-width: 60em) {
+    .container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: start;
+
+    }
+}

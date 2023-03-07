@@ -46,7 +46,11 @@ const Header = (props) => {
           <button className={styles.button} onClick={showCartHandler}>
             Submit Workout
           </button>
-          <AiOutlineClose className={styles.icon} onClick={closeMenuHandler} />
+          <AiOutlineClose
+            className={styles.icon}
+            id={styles["closeIcon"]}
+            onClick={closeMenuHandler}
+          />
         </nav>
       )}
 

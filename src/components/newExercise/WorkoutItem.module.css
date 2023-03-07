@@ -72,15 +72,13 @@
     }
     .list{
         margin-bottom:0.5rem;
-        background-color:green;
+       
     }
 }
     
 
 @media (max-width: 35em) {
-    .list{
-        background-color:red;
-    }
+    
     h3{
         position:absolute;
     }

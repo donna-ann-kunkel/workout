@@ -2,8 +2,17 @@
 .select {
     font-style: inherit;
     font-size: 1.2rem;
-    margin-left: 0.8rem;
-    border-radius: 0.2rem;
+    border-radius: 0.5rem;
     background-color: #fff;
 
+}
+
+@media (max-width: 60em) {
+.container{
+    display:flex;
+    flex-direction: column;
+    gap:0.5rem;
+    align-items: start;
+    
+}
 }

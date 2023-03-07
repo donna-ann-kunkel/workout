@@ -28,7 +28,7 @@ const DateFilter = (props) => {
     props.onDateFilter(filteredDates);
   };
   return (
-    <Fragment>
+    <div className={styles.container}>
       <label htmlFor="date">Date</label>
       <input
         className={styles.input}
@@ -37,7 +37,7 @@ const DateFilter = (props) => {
         ref={refSelectDate}
         onChange={dateFilterHandler}
       />
-    </Fragment>
+    </div>
   );
 };
 export default DateFilter;
